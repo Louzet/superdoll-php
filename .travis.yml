@@ -5,15 +5,11 @@ dist: trusty
 sudo: false
 
 php:
-  - 7.0
   - 7.1
   - 7.2
-  - hhvm
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - php: hhvm
 
 before_script:
   - composer self-update
@@ -34,14 +30,13 @@ after_script:
 notifications:
   email:
     recipients:
-      - micklouzet@hotmail.fr
+      - angelyx@live.fr
     on_success: never # default: change
     on_failure: always # default: always
 
 # safelist
 branches:
   only:
-    - master
     - dev
 
 cache:
