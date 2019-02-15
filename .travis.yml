@@ -1,6 +1,9 @@
 language: php
+
 dist: trusty
+
 sudo: false
+
 php:
   - 7.0
   - 7.1
@@ -12,8 +15,35 @@ matrix:
   allow_failures:
     - php: hhvm
 
-install: composer install
-script: ./vendor/bin/phpunit --coverage-clover=coverage.clover
+before_script:
+  - composer self-update
+  - ./vendor/bin/php-cs-fixer fix src
+
+
+# commands that will verify build
+script:
+  - ./vendor/bin/phpunit --testdox --coverage-html test/coverage
+  - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./travis/run_on_pull_requests; fi'
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./travis/run_on_non_pull_requests; fi'
+
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+
+# Customize when the notification emails are sent.
+notifications:
+  email:
+    recipients:
+      - micklouzet@hotmail.fr
+    on_success: never # default: change
+    on_failure: always # default: always
+
+# safelist
+branches:
+  only:
+    - master
+    - dev
+
+cache:
+  directories:
+    - $HOME/.composer/cache
