@@ -1,0 +1,9 @@
+{
+    "require-dev": {
+        "symfony/test-pack": "^1.0"
+    },
+    "require": {
+        "symfony/console": "^4.2",
+        "symfony/contracts": "^1.0"
+    }
+}
