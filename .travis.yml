@@ -8,17 +8,18 @@ php:
   - 7.1
   - 7.2
 
+env:
+   - SYMFONY_VERSION="3.0.*" DB=mysql
+
 matrix:
   fast_finish: true
 
 before_script:
   - composer self-update
 
-
 # commands that will verify build
 script:
-  - ./vendor/bin/php-cs-fixer fix src
-  - ./vendor/bin/phpunit --testdox --coverage-html test/coverage
+  - phpunit
   - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./travis/run_on_pull_requests; fi'
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./travis/run_on_non_pull_requests; fi'
 
@@ -41,4 +42,4 @@ branches:
 
 cache:
   directories:
-    - $HOME/.composer/cache
+    - $HOME/.composer/cache/files
