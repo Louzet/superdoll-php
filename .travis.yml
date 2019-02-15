@@ -17,11 +17,11 @@ matrix:
 
 before_script:
   - composer self-update
-  - ./vendor/bin/php-cs-fixer fix src
 
 
 # commands that will verify build
 script:
+  - ./vendor/bin/php-cs-fixer fix src
   - ./vendor/bin/phpunit --testdox --coverage-html test/coverage
   - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./travis/run_on_pull_requests; fi'
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./travis/run_on_non_pull_requests; fi'
